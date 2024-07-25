@@ -8,5 +8,6 @@
 </head>
 <body>
 Hello ttosjwi
+<a href="/WEB-INF/jsp/member/join.jsp">로그인</a>
 </body>
 </html>
