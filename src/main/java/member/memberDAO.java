@@ -10,10 +10,10 @@ import java.sql.*;
 
 class memberDAO extends BaseDAO {
 
-  member getMember(String password) throws SQLException {
+  member getMember(String email) throws SQLException {
     Connection con = getConnection();
     PreparedStatement ps = con.prepareStatement(LOGIN);
-    ps.setString(1, password);
+    ps.setString(1, email);
     ResultSet rs = ps.executeQuery();
     member member = null;
     if (rs.next()) {
