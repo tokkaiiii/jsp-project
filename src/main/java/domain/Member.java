@@ -9,7 +9,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-public class member {
+public class Member {
 
   private final int seq;
   private final String email;
@@ -17,6 +17,6 @@ public class member {
   private final String name;
   private final String nickname;
   private final Date rdate;
-  private final int user_type;
-  private final int valid;
+  private final byte user_type;
+  private final byte valid;
 }

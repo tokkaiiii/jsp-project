@@ -1,5 +1,9 @@
 package member.util;
 
+import static member.util.SignupConst.NOPASSWORD;
+import static member.util.SignupConst.SUCCESS;
+
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public abstract class BcryptEncoder {
@@ -8,11 +12,10 @@ public abstract class BcryptEncoder {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
-  public static void isPasswordMatch(String password, String hashedPassword) {
+  public static int isPasswordMatch(String password, String hashedPassword) {
     if (BCrypt.checkpw(password, hashedPassword)) {
-      System.out.println("Password verified");
-    } else {
-      System.out.println("Password not verified");
+      return SUCCESS;
     }
+    return NOPASSWORD;
   }
 }
