@@ -1,3 +1,5 @@
+<%@ page import="static member.util.SignupConst.SUCCESS" %>
+<%@ page import="static member.util.SignupConst.FAILURE" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -116,34 +118,33 @@
 <main>
     <form name="join-form" action="/member/member.do?method=join" method="post">
         <fieldset>
-            <input type="email" name="email" id="email" placeholder="이메일"/>
+            <input type="email" name="email" id="email" placeholder="이메일" required/>
         </fieldset>
-        <div class="select">
+        <fieldset class="select">
             <select id="email-select">
                 <option class="option" value="none">직접입력</option>
                 <option class="option" value="naver">naver.com</option>
                 <option class="option" value="gmail">gmail.com</option>
             </select>
-        </div>
-
+        </fieldset>
         <fieldset>
             <input type="password" name="password" id="password" placeholder="비밀번호" required/>
         </fieldset>
-        <div class="str-pwd-msg hide">
-            8글자 이상, 영문 소문자,대문자 숫자, 특수문자(@$!%*#?&)를 사용하세요
+        <div class="fail-password-msg hide">
+            8글자 이상, 영문 대소문자 숫자, 특수문자(@$!%*#?&)를 입력해주세요
         </div>
         <fieldset>
             <input type="password" name="password-retype" id="password-retype"
-                   placeholder="비밀번호 확인"/>
+                   placeholder="비밀번호 확인" required/>
         </fieldset>
-        <fieldset>
-            <input type="text" name="name" id="name" placeholder="이름"/>
-        </fieldset>
-        <fieldset>
-            <input type="text" name="nickname" id="nickname" placeholder="닉네임"/>
-        </fieldset>
-
         <div class="miss-pwd hide">비밀번호가 일치하지 않습니다</div>
+        <fieldset>
+            <input type="text" name="name" id="name" placeholder="이름" required/>
+        </fieldset>
+        <fieldset>
+            <input type="text" name="nickname" id="nickname" placeholder="닉네임" required/>
+        </fieldset>
+        <div class="miss-nickname hide">닉네임은 10글자 이하로 입력해주세요</div>
         <fieldset class="join">
             <button type="submit" id="join" onkeydown="submit()">회원가입</button>
         </fieldset>
@@ -176,6 +177,85 @@
       }
   )
 
+  function validatePassword(password) {
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return pattern.test(password);
+  }
+
+  const password = document.getElementById('password');
+  const passwordRetype = document.getElementById('password-retype');
+  const nickName = document.getElementById('nickname');
+
+  const checkPassword = () => {
+
+    const failPasswordMsg = document.querySelector('.fail-password-msg');
+    if (validatePassword(password.value)) {
+      failPasswordMsg.classList.add('hide');
+      return ${SUCCESS};
+    } else if (password.value.length == 0) {
+      failPasswordMsg.classList.add('hide');
+      return
+      ${FAILURE}
+    } else {
+      failPasswordMsg.classList.remove('hide');
+      return
+      ${FAILURE}
+    }
+  }
+
+  function validatePasswordRetype(password, passwordRetype) {
+    return password === passwordRetype;
+  }
+
+  const checkPasswordRetype = () => {
+    const failRetypePasswordMsg = document.querySelector('.miss-pwd');
+
+    if (validatePasswordRetype(password.value, passwordRetype.value)) {
+      failRetypePasswordMsg.classList.add('hide');
+      return ${SUCCESS};
+    } else if (passwordRetype.value == 0) {
+      failRetypePasswordMsg.classList.add('hide');
+      return
+      ${FAILURE}
+    } else {
+      failRetypePasswordMsg.classList.remove('hide');
+      return
+      ${FAILURE}
+    }
+  }
+
+  function validateNickname(nickname) {
+    const pattern = /^.{1,10}$/;
+    return pattern.test(nickname);
+  }
+
+  const checkNickname = () => {
+    const failNicknameMsg = document.querySelector('.miss-nickname');
+
+    if (validateNickname(nickName.value)) {
+      failNicknameMsg.classList.add('hide');
+      return ${SUCCESS};
+    } else if (nickName.value == 0) {
+      failNicknameMsg.classList.add('hide');
+      return
+      ${FAILURE}
+    } else {
+      failNicknameMsg.classList.remove('hide');
+      return
+      ${FAILURE}
+    }
+  }
+
+  password.onkeyup = () => {
+    checkPassword()
+  }
+  passwordRetype.onkeyup = () => {
+    checkPasswordRetype()
+  }
+  nickName.onkeyup = () => {
+    checkNickname()
+  }
+  alert(checkPassword())
 </script>
 </body>
 </html>

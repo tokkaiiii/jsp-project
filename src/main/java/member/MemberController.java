@@ -62,9 +62,9 @@ public class MemberController extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("member", member);
       }
-      System.out.println("result: " + result);
+      System.out.println("[MemberController] match 메소드에서 result: " + result);
       req.setAttribute("result", result);
-      req.getRequestDispatcher("/WEB-INF/jsp/member/message.jsp").forward(req, res);
+      req.getRequestDispatcher("/WEB-INF/jsp/member/login.jsp").forward(req, res);
     }
   }
 

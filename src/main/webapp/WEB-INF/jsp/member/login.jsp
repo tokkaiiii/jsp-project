@@ -1,3 +1,5 @@
+<%@ page import="static member.util.SignupConst.NOPASSWORD" %>
+<%@ page import="static member.util.SignupConst.NOID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -134,7 +136,14 @@
     <main class="main">
         <form name="login-form" action="/member/member.do?method=match" method="post">
             <fieldset>
-                <input type="text" id="login-email" name="login-email" placeholder="이메일"/>
+                <input type="text" id="login-email" name="login-email" placeholder="이메일" autofocus/>
+            </fieldset>
+            <fieldset>
+                <select id="email-select">
+                    <option class="option" value="none">직접입력</option>
+                    <option class="option" value="naver">naver.com</option>
+                    <option class="option" value="gmail">gmail.com</option>
+                </select>
             </fieldset>
             <fieldset>
                 <input
@@ -144,14 +153,17 @@
                         placeholder="비밀번호"
                 />
             </fieldset>
-            <fieldset class="hide" style="width: 500px; color: #ca3030">
-                <div class="str-pwd-msg hide">
-                    아이디(로그인 전화번호, 로그인 전용 아이디) 또는 비밀번호가 잘못
-                    되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.
+            <fieldset>
+                <div class="login-email-msg hide">
+                    이메일이 잘못되었습니다. 이메일을 정확히 입력해 주세요.
+                </div>
+                <div class="login-password-msg hide">
+                    비밀번호가 잘못되었습니다. 비밀번호를 정확히 입력해 주세요.
                 </div>
             </fieldset>
+
             <fieldset>
-                <button class="login" type="submit">로그인</button>
+                <button id="login-btn" class="login" type="submit">로그인</button>
             </fieldset>
         </form>
 
@@ -168,6 +180,45 @@
         <p>팀땃쥐. All rights reserved.</p>
     </footer>
 </div>
+<script>
+  document.getElementById('login-btn').addEventListener('keydown', (evt) => {
+    document.login - form.submit();
+  })
+
+  function domain_remove(email) {
+    email = email.trim();
+    let atIndex = email.indexOf('@');
+    if (atIndex != -1) {
+      return email.substring(0, atIndex);
+    }
+    return email
+  }
+
+  const email = document.getElementById('login-email');
+  const email_select = document.getElementById('email-select');
+  email_select.addEventListener('change', (evt) => {
+        if (evt.target.value !== 'none') {
+          email.value = domain_remove(email.value);
+          const e = email.value + '@' + email_select.options[email_select.selectedIndex].innerText;
+          email.value = e;
+        } else {
+          email.value = '';
+        }
+      }
+  )
+  const emailMsg = document.querySelector('.login-email-msg');
+  const passwordMsg = document.querySelector('.login-password-msg');
+  <c:choose>
+  <c:when test="${result == NOPASSWORD}">
+  passwordMsg.classList.remove('hide');
+  emailMsg.classList.add('hide')
+  </c:when>
+  <c:when test="${result == NOID}">
+  emailMsg.classList.remove('hide');
+  passwordMsg.classList.add('hide')
+  </c:when>
+  </c:choose>
+</script>
 </body>
 </html>
 
