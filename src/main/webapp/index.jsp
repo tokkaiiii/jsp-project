@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/index.css">
 </head>
 <body>
+
+<a href="/WEB-INF/jsp/member/join.jsp">로그인</a>
+
 <div class="background-wrapper">
   <main>
     <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
@@ -22,5 +25,6 @@
     <jsp:include page="/WEB-INF/jsp/common/bottom_menu.jsp"/>
   </main>
 </div>
+
 </body>
 </html>
