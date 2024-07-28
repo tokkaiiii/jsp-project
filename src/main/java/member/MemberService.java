@@ -24,4 +24,7 @@ public class MemberService {
   public int join(String email, String password, String name,String nickname){
     return dao.join(email,password,name,nickname);
   }
+ public int emailCheck(String email){
+    return dao.emailCheck(email);
+ }
 }

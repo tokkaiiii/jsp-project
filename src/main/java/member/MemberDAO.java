@@ -2,6 +2,7 @@ package member;
 
 import static member.util.BcryptEncoder.encode;
 import static member.util.BcryptEncoder.isPasswordMatch;
+import static member.util.MemberSQL.EMAILCHECK;
 import static member.util.MemberSQL.JOIN;
 import static member.util.SignupConst.ERROR;
 import static member.util.SignupConst.FAILURE;
@@ -85,5 +86,23 @@ class MemberDAO extends BaseDAO {
       System.out.println("[memberDAO] join: Error: " + se.getMessage());
       return FAILURE;
     }
+  }
+  int emailCheck(String email) {
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      System.out.println(email);
+      con = getConnection();
+      ps = con.prepareStatement(EMAILCHECK);
+      ps.setString(1, email);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("valid");
+      }
+    }catch (SQLException se){
+      System.out.println("[memberDAO] emailCheck: Error: " + se.getMessage());
+    }
+    return FAILURE;
   }
 }

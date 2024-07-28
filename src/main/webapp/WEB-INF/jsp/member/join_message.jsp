@@ -11,8 +11,8 @@
 <script>
   if (${result}==<%=FAILURE%>) {
     alert("동일한 아이디가 있습니다")
+    history.back();
   } else {
-    alert("가입 성공했습니다 저희 사이트를 이용하실 수 있습니다")
-
+    location.href='/member/member.do'
   }
 </script>
