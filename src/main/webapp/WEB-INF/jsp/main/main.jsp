@@ -15,7 +15,7 @@
 <c:if test="${empty member}">
     <h1>로그인 안돼있음</h1>
     로그인하러 가셈
-    <a href="<c:url value='/member/member.do?method=login'/>">로그인하기</a>
+    <a href='/member/member.do?method=login'>로그인하기</a>
 </c:if>
 <h1>이용가능</h1>
 </body>

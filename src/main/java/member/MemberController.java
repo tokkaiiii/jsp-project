@@ -2,6 +2,7 @@ package member;
 
 import static member.util.SignupConst.FAILURE;
 import static member.util.SignupConst.SUCCESS;
+import static member.util.SignupConst.VALID;
 
 import domain.Member;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/member/member.do")
 public class MemberController extends HttpServlet {
@@ -35,6 +37,10 @@ public class MemberController extends HttpServlet {
 
           case "join":
             join(req, res);
+            break;
+
+          case "emailCheck":
+            emailCheck(req, res);
             break;
         }
       }
@@ -64,7 +70,7 @@ public class MemberController extends HttpServlet {
       }
       System.out.println("[MemberController] match 메소드에서 result: " + result);
       req.setAttribute("result", result);
-      req.getRequestDispatcher("/WEB-INF/jsp/member/login.jsp").forward(req, res);
+      req.getRequestDispatcher("/WEB-INF/jsp/main/main.jsp").forward(req, res);
     }
   }
 
@@ -92,6 +98,18 @@ public class MemberController extends HttpServlet {
       req.setAttribute("result", result);
       req.getRequestDispatcher("/WEB-INF/jsp/member/join_message.jsp").forward(req, res);
     }
+  }
+  private void emailCheck(HttpServletRequest req, HttpServletResponse res)
+    throws IOException, ServletException {
+    String email = req.getParameter("email");
+    MemberService service = MemberService.getInstance();
+    int valid = service.emailCheck(email);
+    StringBuilder jsonBuilder = new StringBuilder("{\"valid\":").append(valid).append("}");
 
+    res.setContentType("application/json;charset=UTF-8");
+    res.setCharacterEncoding("UTF-8");
+    PrintWriter out = res.getWriter();
+    out.print(jsonBuilder.toString());
+    out.flush();
   }
 }
