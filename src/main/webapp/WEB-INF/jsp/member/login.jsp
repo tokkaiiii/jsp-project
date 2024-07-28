@@ -124,6 +124,7 @@
       .hide {
         display: none;
       }
+
       .password {
         position: relative;
       }
@@ -185,14 +186,14 @@
             </fieldset>
         </form>
 
-        <nav>
-            <fieldset>
-                <a href="#">비밀번호찾기</a>
-            </fieldset>
-            <fieldset>
-                <a href="<c:url value='/member/member.do?method=joinForm'/>">회원가입</a>
-            </fieldset>
-        </nav>
+        <div class="login-footer">
+            <a href="/member/member.do?method=findId">아이디찾기</a>
+            <span>/</span>
+            <a href="#">비밀번호찾기</a>
+        </div>
+        <div>
+            <a href='/member/member.do?method=joinForm'>회원가입</a>
+        </div>
     </main>
     <footer>
         <p>팀땃쥐. All rights reserved.</p>
@@ -225,7 +226,7 @@
       }
   )
   $(function () {
-    $('.eyes').on('click',function () {
+    $('.eyes').on('click', function () {
 
       $('.password').toggleClass('active');
 

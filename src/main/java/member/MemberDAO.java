@@ -72,7 +72,6 @@ class MemberDAO extends BaseDAO {
   int join(String email, String password, String name, String nickname) {
     Connection con = null;
     PreparedStatement ps = null;
-    ResultSet rs = null;
     String hashedPassword = encode(password);
     try {
       con = getConnection();

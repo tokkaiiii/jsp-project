@@ -42,6 +42,9 @@ public class MemberController extends HttpServlet {
           case "emailCheck":
             emailCheck(req, res);
             break;
+
+          case "findId":
+            findId(req, res);break;
         }
       }
       req.getRequestDispatcher("/WEB-INF/jsp/main/main.jsp").forward(req, res);
@@ -109,7 +112,11 @@ public class MemberController extends HttpServlet {
     res.setContentType("application/json;charset=UTF-8");
     res.setCharacterEncoding("UTF-8");
     PrintWriter out = res.getWriter();
-    out.print(jsonBuilder.toString());
+    out.print(jsonBuilder);
     out.flush();
+  }
+  private void findId(HttpServletRequest req, HttpServletResponse res)
+    throws IOException, ServletException {
+    req.getRequestDispatcher("/WEB-INF/jsp/member/find_id.jsp").forward(req, res);
   }
 }
