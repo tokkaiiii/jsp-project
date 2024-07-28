@@ -87,21 +87,4 @@ class MemberDAO extends BaseDAO {
       return FAILURE;
     }
   }
-  int emailCheck(String email) {
-    Connection con = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-    try {
-      con = getConnection();
-      ps = con.prepareStatement(EMAILCHECK);
-      ps.setString(1, email);
-      rs = ps.executeQuery();
-      if (rs.next()) {
-        return rs.getInt("valid");
-      }
-    }catch (SQLException se){
-      System.out.println("[memberDAO] emailCheck: Error: " + se.getMessage());
-    }
-    return FAILURE;
-  }
 }
