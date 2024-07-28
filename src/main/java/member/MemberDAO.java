@@ -92,7 +92,6 @@ class MemberDAO extends BaseDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
-      System.out.println(email);
       con = getConnection();
       ps = con.prepareStatement(EMAILCHECK);
       ps.setString(1, email);
