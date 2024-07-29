@@ -3,6 +3,7 @@ package member;
 import static member.util.BcryptEncoder.encode;
 import static member.util.BcryptEncoder.isPasswordMatch;
 import static member.util.MemberSQL.EMAILCHECK;
+import static member.util.MemberSQL.EMAILNAME;
 import static member.util.MemberSQL.JOIN;
 import static member.util.SignupConst.ERROR;
 import static member.util.SignupConst.FAILURE;
@@ -102,5 +103,28 @@ class MemberDAO extends BaseDAO {
       System.out.println("[memberDAO] emailCheck: Error: " + se.getMessage());
     }
     return FAILURE;
+  }
+
+  Member getMemberByEmail(String email, String name) {
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      con = getConnection();
+      ps = con.prepareStatement(EMAILNAME);
+      ps.setString(1, email);
+      ps.setString(2, name);
+      rs = ps.executeQuery();
+      Member member = null;
+      if (rs.next()) {
+        member = Member.builder()
+            .email(rs.getString("email"))
+            .name(rs.getString("name")).build();
+      }
+      return member;
+    }catch (SQLException se){
+      System.out.println("[memberDAO] getMemberByEmail: Error: " + se.getMessage());
+    }
+    return null;
   }
 }

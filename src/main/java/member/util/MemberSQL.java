@@ -10,4 +10,6 @@ public class MemberSQL {
 
   public static final String EMAILCHECK = "select VALID from MEMBER where EMAIL = ? and VALID=0";
 
+  public static final String EMAILNAME = "select * from MEMBER where EMAIL = ? and NAME = ? and VALID=0";
+
 }

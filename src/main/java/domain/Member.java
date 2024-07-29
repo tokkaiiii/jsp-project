@@ -4,11 +4,13 @@ import java.sql.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
+@Getter
 public class Member {
 
   private final int seq;

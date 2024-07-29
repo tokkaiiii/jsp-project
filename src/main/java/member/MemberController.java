@@ -2,7 +2,6 @@ package member;
 
 import static member.util.SignupConst.FAILURE;
 import static member.util.SignupConst.SUCCESS;
-import static member.util.SignupConst.VALID;
 
 import domain.Member;
 import jakarta.servlet.ServletException;
@@ -45,6 +44,17 @@ public class MemberController extends HttpServlet {
 
           case "findId":
             findId(req, res);break;
+
+          case "findPwd": findPwd(req, res);break;
+
+          case "myId":
+            try {
+              myId(req, res);
+            } catch (Exception e) {
+              System.out.println("오류");
+              throw new RuntimeException(e);
+            }
+            break;
         }
       }
       req.getRequestDispatcher("/WEB-INF/jsp/main/main.jsp").forward(req, res);
@@ -118,5 +128,27 @@ public class MemberController extends HttpServlet {
   private void findId(HttpServletRequest req, HttpServletResponse res)
     throws IOException, ServletException {
     req.getRequestDispatcher("/WEB-INF/jsp/member/find_id.jsp").forward(req, res);
+  }
+
+  private void findPwd(HttpServletRequest req, HttpServletResponse res)
+      throws IOException, ServletException {
+    req.getRequestDispatcher("/WEB-INF/jsp/member/find_pwd.jsp").forward(req, res);
+  }
+
+  private void myId(HttpServletRequest req, HttpServletResponse res)
+      throws Exception {
+    String email = req.getParameter("email");
+    String name = req.getParameter("name");
+    Member member = null;
+    if (email != null && name != null) {
+      MemberService service = MemberService.getInstance();
+      member = service.getMemberByEmail(email, name);
+      MailService mailService = new MailService();
+      String authenticationCode = mailService.sendEmail(member.getEmail());
+      HttpSession session = req.getSession();
+      session.setAttribute("member", member);
+      session.setAttribute("authenticationCode", authenticationCode);
+      req.getRequestDispatcher("/WEB-INF/jsp/member/my_id.jsp").forward(req, res);
+    }
   }
 }

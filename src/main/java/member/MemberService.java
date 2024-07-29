@@ -27,4 +27,8 @@ public class MemberService {
  public int emailCheck(String email){
     return dao.emailCheck(email);
  }
+
+ public Member getMemberByEmail(String email, String name){
+    return dao.getMemberByEmail(email,name);
+ }
 }
