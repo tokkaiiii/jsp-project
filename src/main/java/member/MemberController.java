@@ -148,7 +148,7 @@ public class MemberController extends HttpServlet {
       HttpSession session = req.getSession();
       session.setAttribute("member", member);
       session.setAttribute("authenticationCode", authenticationCode);
-      req.getRequestDispatcher("/WEB-INF/jsp/member/my_id.jsp").forward(req, res);
+      req.getRequestDispatcher("/WEB-INF/jsp/member/my_pwd.jsp").forward(req, res);
     }
   }
 }

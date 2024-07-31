@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class MailService {
   private final String host = "smtp.naver.com";
-  private final String from = "";
-  private final String password = "";
+  private final String from = "tovkdl@naver.com";
+  private final String password = "PC6RDYBJTXVW";
 
   public String sendEmail(String to) throws Exception {
     String authenCode = null;
@@ -27,6 +27,8 @@ public class MailService {
     props.put("mail.smtp.ssl.trust", host);
 
     Session session = Session.getDefaultInstance(props, new Authenticator() {
+
+      @Override
       protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(from, password);
       }
